@@ -43,10 +43,8 @@
     .slider-val{font-size:13px;font-weight:700;color:var(--w)}
     input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:var(--bg4);border-radius:2px;outline:none;cursor:pointer}
     input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--g);border:2px solid var(--bg);cursor:pointer}
-
-    /* CHART */
     .chart-outer{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -1.25rem;padding:0 1.25rem 12px}
-    .chart-inner{display:flex;align-items:flex-end;gap:6px;height:210px;padding-bottom:0;min-width:fit-content}
+    .chart-inner{display:flex;align-items:flex-end;gap:6px;height:210px;min-width:fit-content}
     .month-col{display:flex;flex-direction:column;align-items:center;width:46px;flex-shrink:0}
     .bars{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:160px;width:38px}
     .bar-s{width:38px;border-radius:5px 5px 0 0;background:var(--blue);position:relative;transition:height .3s}
@@ -61,7 +59,6 @@
     .m-tot.g{color:var(--g)}
     .m-tag{font-size:9.5px;color:var(--g)}
     .divider{width:1px;height:160px;border-left:1.5px dashed rgba(255,255,255,.12);flex-shrink:0;align-self:flex-end;margin-bottom:30px}
-
     .viability{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:var(--r);border:.5px solid;font-size:13px;margin-bottom:.85rem;line-height:1.5}
     .viability.ok{background:rgba(61,220,110,.07);border-color:rgba(61,220,110,.28);color:var(--g)}
     .viability.warn{background:rgba(234,162,0,.07);border-color:rgba(234,162,0,.28);color:#d4920a}
@@ -107,9 +104,9 @@
   <div class="card">
     <p class="card-label">Plan Sofia a vender</p>
     <div class="plan-row">
-      <button class="plan-btn" onclick="setPlan('basic')">Básico<span class="plan-price">€149/mes</span></button>
-      <button class="plan-btn active" onclick="setPlan('pro')">Pro<span class="plan-price">€249/mes</span></button>
-      <button class="plan-btn" onclick="setPlan('prem')">Premium<span class="plan-price">€399/mes</span></button>
+      <button class="plan-btn" onclick="setPlan('basic')">Básico<span class="plan-price">€149/mes · Setup €300</span></button>
+      <button class="plan-btn active" onclick="setPlan('pro')">Pro<span class="plan-price">€249/mes · Setup €700</span></button>
+      <button class="plan-btn" onclick="setPlan('prem')">Premium<span class="plan-price">€399/mes · Setup €1.200</span></button>
     </div>
   </div>
 
@@ -117,8 +114,8 @@
     <p class="card-label">Tus parámetros</p>
     <div class="slider-grid">
       <div><div class="slider-row"><span class="slider-label">Cuentas nuevas / mes</span><span class="slider-val" id="v1">2</span></div><input type="range" id="s1" min="1" max="10" value="2" step="1" oninput="update()"></div>
-      <div><div class="slider-row"><span class="slider-label">Mis gastos mensuales</span><span class="slider-val" id="v2">€1,200</span></div><input type="range" id="s2" min="500" max="3000" value="1200" step="50" oninput="update()"></div>
-      <div><div class="slider-row"><span class="slider-label">Setup fee por instalación</span><span class="slider-val" id="v3">€500</span></div><input type="range" id="s3" min="200" max="1000" value="500" step="50" oninput="update()"></div>
+      <div><div class="slider-row"><span class="slider-label">Mis gastos mensuales</span><span class="slider-val" id="v2">€1.200</span></div><input type="range" id="s2" min="500" max="3000" value="1200" step="50" oninput="update()"></div>
+      <div><div class="slider-row"><span class="slider-label">Setup fee por instalación</span><span class="slider-val" id="v3">€700</span></div><input type="range" id="s3" min="100" max="2000" value="700" step="50" oninput="update()"></div>
       <div><div class="slider-row"><span class="slider-label">% comisión setup</span><span class="slider-val" id="v4">25%</span></div><input type="range" id="s4" min="10" max="35" value="25" step="5" oninput="update()"></div>
       <div><div class="slider-row"><span class="slider-label">% comisión mensual</span><span class="slider-val" id="v5">25%</span></div><input type="range" id="s5" min="10" max="35" value="25" step="5" oninput="update()"></div>
     </div>
@@ -130,9 +127,9 @@
       <div class="chart-inner" id="chart"></div>
     </div>
     <p style="font-size:11px;color:var(--m);margin-top:8px;text-align:center">
-      <span style="display:inline-block;width:10px;height:10px;background:var(--blue);border-radius:2px;margin-right:4px"></span>Setup &nbsp;
-      <span style="display:inline-block;width:10px;height:10px;background:var(--g);border-radius:2px;margin-right:4px"></span>Recurrente &nbsp;
-      <span style="display:inline-block;width:10px;height:10px;background:repeating-linear-gradient(45deg,rgba(61,220,110,.15),rgba(61,220,110,.15) 3px,rgba(61,220,110,.45) 3px,rgba(61,220,110,.45) 6px);border:1px dashed var(--g);border-radius:2px;margin-right:4px"></span>Sin ventas
+      <span style="display:inline-block;width:10px;height:10px;background:var(--blue);border-radius:2px;margin-right:4px;vertical-align:middle"></span>Setup &nbsp;
+      <span style="display:inline-block;width:10px;height:10px;background:var(--g);border-radius:2px;margin-right:4px;vertical-align:middle"></span>Recurrente &nbsp;
+      <span style="display:inline-block;width:10px;height:10px;border:1px dashed var(--g);border-radius:2px;margin-right:4px;vertical-align:middle;background:repeating-linear-gradient(45deg,rgba(61,220,110,.15),rgba(61,220,110,.15) 3px,rgba(61,220,110,.45) 3px,rgba(61,220,110,.45) 6px)"></span>Sin ventas
     </p>
   </div>
 
@@ -165,7 +162,11 @@
 </footer>
 
 <script>
-  const plans={basic:{price:149},pro:{price:249},prem:{price:399}};
+  const plans={
+    basic:{price:149, setup:300},
+    pro:  {price:249, setup:700},
+    prem: {price:399, setup:1200}
+  };
   let cur='pro';
 
   function setPlan(p){
@@ -173,6 +174,10 @@
     document.querySelectorAll('.plan-btn').forEach((b,i)=>{
       b.classList.toggle('active',['basic','pro','prem'][i]===p);
     });
+    // Sync setup slider to plan default
+    const sl=document.getElementById('s3');
+    sl.value=plans[p].setup;
+    document.getElementById('v3').textContent=fmt(plans[p].setup);
     update();
   }
 
