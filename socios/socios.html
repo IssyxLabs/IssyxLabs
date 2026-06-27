@@ -41,8 +41,10 @@
     .slider-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
     .slider-label{font-size:13px;color:var(--s2)}
     .slider-val{font-size:13px;font-weight:700;color:var(--w)}
+    .slider-note{font-size:11px;color:var(--m);margin-top:4px}
     input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:var(--bg4);border-radius:2px;outline:none;cursor:pointer}
     input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--g);border:2px solid var(--bg);cursor:pointer}
+    .warn-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#d4920a;background:rgba(234,162,0,.08);border:.5px solid rgba(234,162,0,.25);border-radius:6px;padding:3px 8px;margin-top:5px}
     .chart-outer{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -1.25rem;padding:0 1.25rem 12px}
     .chart-inner{display:flex;align-items:flex-end;gap:6px;height:210px;min-width:fit-content}
     .month-col{display:flex;flex-direction:column;align-items:center;width:46px;flex-shrink:0}
@@ -94,7 +96,7 @@
 <header class="hero">
   <div class="hero-badge">Red de Socios</div>
   <h1>¿Cuánto puedes ganar<br>con <em>Issyx Labs</em>?</h1>
-  <p>Ajusta los parámetros y descubre tu potencial de ingresos como Socio Issyx.</p>
+  <p>Selecciona el plan y ajusta tus parámetros para ver tu proyección de ingresos.</p>
 </header>
 
 <hr class="hr">
@@ -113,11 +115,32 @@
   <div class="card">
     <p class="card-label">Tus parámetros</p>
     <div class="slider-grid">
-      <div><div class="slider-row"><span class="slider-label">Cuentas nuevas / mes</span><span class="slider-val" id="v1">2</span></div><input type="range" id="s1" min="1" max="10" value="2" step="1" oninput="update()"></div>
-      <div><div class="slider-row"><span class="slider-label">Mis gastos mensuales</span><span class="slider-val" id="v2">€1.200</span></div><input type="range" id="s2" min="500" max="3000" value="1200" step="50" oninput="update()"></div>
-      <div><div class="slider-row"><span class="slider-label">Setup fee por instalación</span><span class="slider-val" id="v3">€700</span></div><input type="range" id="s3" min="100" max="2000" value="700" step="50" oninput="update()"></div>
-      <div><div class="slider-row"><span class="slider-label">% comisión setup</span><span class="slider-val" id="v4">25%</span></div><input type="range" id="s4" min="10" max="35" value="25" step="5" oninput="update()"></div>
-      <div><div class="slider-row"><span class="slider-label">% comisión mensual</span><span class="slider-val" id="v5">25%</span></div><input type="range" id="s5" min="10" max="35" value="25" step="5" oninput="update()"></div>
+
+      <div>
+        <div class="slider-row">
+          <span class="slider-label">Cuentas nuevas / mes</span>
+          <span class="slider-val" id="v1">2</span>
+        </div>
+        <input type="range" id="s1" min="1" max="10" value="2" step="1" oninput="update()">
+      </div>
+
+      <div>
+        <div class="slider-row">
+          <span class="slider-label">Mis gastos mensuales</span>
+          <span class="slider-val" id="v2">€1.200</span>
+        </div>
+        <input type="range" id="s2" min="500" max="3000" value="1200" step="50" oninput="update()">
+      </div>
+
+      <div>
+        <div class="slider-row">
+          <span class="slider-label">Setup fee cobrado al cliente</span>
+          <span class="slider-val" id="v3">€700</span>
+        </div>
+        <input type="range" id="s3" min="0" max="700" value="700" step="25" oninput="update()">
+        <div id="setup-note" class="slider-note"></div>
+      </div>
+
     </div>
   </div>
 
@@ -140,7 +163,7 @@
 
   <div class="kpi-grid" id="kpis"></div>
 
-  <p style="font-size:11px;color:var(--m)">* Setup se cobra una vez por cliente. El recurrente se acumula cada mes que el cliente permanece activo.</p>
+  <p style="font-size:11px;color:var(--m)">* Comisiones fijas: 25% sobre setup · 25% sobre mensualidad. El recurrente se acumula cada mes que el cliente permanece activo.</p>
 
 </main>
 
@@ -167,6 +190,8 @@
     pro:  {price:249, setup:700},
     prem: {price:399, setup:1200}
   };
+  const COMM_SETUP=0.25;
+  const COMM_MO=0.25;
   let cur='pro';
 
   function setPlan(p){
@@ -174,10 +199,9 @@
     document.querySelectorAll('.plan-btn').forEach((b,i)=>{
       b.classList.toggle('active',['basic','pro','prem'][i]===p);
     });
-    // Sync setup slider to plan default
     const sl=document.getElementById('s3');
+    sl.max=plans[p].setup;
     sl.value=plans[p].setup;
-    document.getElementById('v3').textContent=fmt(plans[p].setup);
     update();
   }
 
@@ -187,28 +211,38 @@
     const nA=parseInt(document.getElementById('s1').value);
     const gas=parseInt(document.getElementById('s2').value);
     const sup=parseInt(document.getElementById('s3').value);
-    const cS=parseInt(document.getElementById('s4').value)/100;
-    const cM=parseInt(document.getElementById('s5').value)/100;
     const price=plans[cur].price;
+    const planSetup=plans[cur].setup;
 
     document.getElementById('v1').textContent=nA;
     document.getElementById('v2').textContent=fmt(gas);
     document.getElementById('v3').textContent=fmt(sup);
-    document.getElementById('v4').textContent=Math.round(cS*100)+'%';
-    document.getElementById('v5').textContent=Math.round(cM*100)+'%';
+
+    // Setup note: show discount info if below plan setup
+    const note=document.getElementById('setup-note');
+    const discount=planSetup-sup;
+    const discountPct=planSetup>0?Math.round((discount/planSetup)*100):0;
+    const maxDiscount=Math.round(planSetup*0.25);
+    if(discount===0){
+      note.innerHTML=`Setup oficial del plan. Tu comisión: <strong>${fmt(sup*COMM_SETUP)}</strong> por instalación.`;
+    } else if(discount<=maxDiscount){
+      note.innerHTML=`Descuento de ${fmt(discount)} (${discountPct}%) va contra tu comisión. Tu comisión real: <strong>${fmt(sup*COMM_SETUP)}</strong> por instalación.`;
+    } else {
+      note.innerHTML=`<span class="warn-badge">⚠ Descuento supera el 25% máximo permitido (${fmt(maxDiscount)})</span>`;
+    }
 
     const months=[];
     let acc=0,supAcc=0,maxH=0;
     for(let m=1;m<=6;m++){
       acc+=nA;
-      const si=nA*sup*cS;
-      const ri=acc*price*cM;
+      const si=nA*sup*COMM_SETUP;
+      const ri=acc*price*COMM_MO;
       const tot=si+ri;
       supAcc+=si;
       if(tot>maxH)maxH=tot;
       months.push({m,si,ri,tot,acc});
     }
-    const m7ri=acc*price*cM;
+    const m7ri=acc*price*COMM_MO;
     if(m7ri>maxH)maxH=m7ri;
 
     const MX=148,MS=22,MR=32;
