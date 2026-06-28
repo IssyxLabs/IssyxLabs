@@ -228,11 +228,11 @@
 
     const note=document.getElementById('setup-note');
     if(discount===0){
-      note.innerHTML=`Sin descuento. Tu comisión por instalación: <strong style="color:var(--g)">${fmt(vendorComm)}</strong> · Issyx: ${fmt(issyxPart)}`;
+      note.innerHTML=`Sin descuento. Tu comisión por instalación: <strong style="color:var(--g)">${fmt(vendorComm)}</strong>`;
     } else if(vendorComm>0){
-      note.innerHTML=`Descuento de ${fmt(discount)} al cliente. Tu comisión: <strong style="color:var(--g)">${fmt(vendorComm)}</strong> · Issyx: ${fmt(issyxPart)}`;
+      note.innerHTML=`Descuento de ${fmt(discount)} al cliente. Tu comisión: <strong style="color:var(--g)">${fmt(vendorComm)}</strong>`;
     } else {
-      note.innerHTML=`Descuento máximo aplicado. Tu comisión: <strong style="color:#e25555">€0</strong> · Issyx: ${fmt(issyxPart)}`;
+      note.innerHTML=`Descuento máximo aplicado. Tu comisión: <strong style="color:#e25555">€0</strong>`;
     }
 
     const months=[];
