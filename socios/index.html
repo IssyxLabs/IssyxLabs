@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -42,10 +41,9 @@
     .slider-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
     .slider-label{font-size:13px;color:var(--s2)}
     .slider-val{font-size:13px;font-weight:700;color:var(--w)}
-    .slider-note{font-size:11px;color:var(--m);margin-top:4px}
+    .slider-note{font-size:11px;color:var(--m);margin-top:4px;line-height:1.5}
     input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:var(--bg4);border-radius:2px;outline:none;cursor:pointer}
     input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--g);border:2px solid var(--bg);cursor:pointer}
-    /* CHART */
     .chart-outer{overflow-x:auto;-webkit-overflow-scrolling:touch}
     .chart-inner{display:flex;align-items:flex-end;gap:8px;height:220px;min-width:0;width:100%}
     .month-col{display:flex;flex-direction:column;align-items:center;flex:1;min-width:40px}
@@ -165,7 +163,7 @@
 
   <div class="kpi-grid" id="kpis"></div>
 
-  <p style="font-size:11px;color:var(--m)">* Comisiones fijas: 25% sobre setup · 25% sobre mensualidad. El descuento máximo en setup es el equivalente a tu comisión.</p>
+  <p style="font-size:11px;color:var(--m)">* Setup = parte Issyx Labs + tu comisión. Al bajar el slider reduces tu comisión para ofrecer descuento al cliente. La parte de Issyx Labs nunca se toca.</p>
 
 </main>
 
@@ -192,7 +190,7 @@
     pro:  {price:249, setup:700},
     prem: {price:399, setup:1200}
   };
-  const COMM=0.25;
+  const COMM=0.25; // porcentaje de comisión del vendedor sobre setup
   let cur='pro';
 
   function setPlan(p){
@@ -201,13 +199,13 @@
       b.classList.toggle('active',['basic','pro','prem'][i]===p);
     });
     const planSetup=plans[p].setup;
-    const myComm=Math.round(planSetup*COMM);
-    const minSetup=planSetup-myComm;
+    const maxComm=Math.round(planSetup*COMM);     // comisión máxima del vendedor
+    const issyxPart=planSetup-maxComm;            // parte intocable de Issyx
     const sl=document.getElementById('s3');
-    sl.min=minSetup;
-    sl.max=planSetup;
+    sl.min=issyxPart;   // mínimo = parte de Issyx (vendedor cede toda su comisión)
+    sl.max=planSetup;   // máximo = setup completo sin descuento
     sl.value=planSetup;
-    sl.step=Math.round(myComm/10)||25;
+    sl.step=Math.round(maxComm/10)||25;
     update();
   }
 
@@ -216,31 +214,32 @@
   function update(){
     const nA=parseInt(document.getElementById('s1').value);
     const gas=parseInt(document.getElementById('s2').value);
-    const sup=parseInt(document.getElementById('s3').value);
+    const sup=parseInt(document.getElementById('s3').value); // setup cobrado al cliente
     const price=plans[cur].price;
     const planSetup=plans[cur].setup;
-    const myComm=Math.round(planSetup*COMM);
-    const minSetup=planSetup-myComm;
+    const maxComm=Math.round(planSetup*COMM);  // comisión máxima posible
+    const issyxPart=planSetup-maxComm;         // parte fija de Issyx
+    const vendorComm=sup-issyxPart;            // lo que realmente cobra el vendedor
+    const discount=planSetup-sup;              // descuento dado al cliente
 
     document.getElementById('v1').textContent=nA;
     document.getElementById('v2').textContent=fmt(gas);
     document.getElementById('v3').textContent=fmt(sup);
 
     const note=document.getElementById('setup-note');
-    const discount=planSetup-sup;
-    const myEarning=Math.round(sup*COMM);
     if(discount===0){
-      note.innerHTML=`Setup oficial. Tu comisión: <strong style="color:var(--g)">${fmt(myEarning)}</strong> por instalación.`;
+      note.innerHTML=`Sin descuento. Tu comisión por instalación: <strong style="color:var(--g)">${fmt(vendorComm)}</strong> · Issyx: ${fmt(issyxPart)}`;
+    } else if(vendorComm>0){
+      note.innerHTML=`Descuento de ${fmt(discount)} al cliente. Tu comisión: <strong style="color:var(--g)">${fmt(vendorComm)}</strong> · Issyx: ${fmt(issyxPart)}`;
     } else {
-      const discountLeft=myComm-discount;
-      note.innerHTML=`Descuento de ${fmt(discount)} aplicado. Tu comisión: <strong style="color:var(--g)">${fmt(myEarning)}</strong> por instalación. Margen restante para descuento: ${fmt(discountLeft)}.`;
+      note.innerHTML=`Descuento máximo aplicado. Tu comisión: <strong style="color:#e25555">€0</strong> · Issyx: ${fmt(issyxPart)}`;
     }
 
     const months=[];
     let acc=0,supAcc=0,maxH=0;
     for(let m=1;m<=6;m++){
       acc+=nA;
-      const si=nA*sup*COMM;
+      const si=nA*vendorComm; // lo que gana el vendedor por setup ese mes
       const ri=acc*price*COMM;
       const tot=si+ri;
       supAcc+=si;
