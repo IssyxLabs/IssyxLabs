@@ -1,0 +1,45 @@
+
+<!-- 
+  FIRMA DE CORREO - ISSYX LABS
+  Instrucciones:
+  1. Sube el logo (logo-firma.png) a issyxlabs.com, por ejemplo a: https://issyxlabs.com/assets/logo-firma.png
+  2. Reemplaza la URL en el atributo src de la etiqueta <img> más abajo si usas otra ruta.
+  3. Copia todo el bloque de abajo (desde <table hasta </table>) y pégalo en el editor de firmas de Gmail u Outlook (usando "Pegar" normal, no "Pegar sin formato").
+-->
+
+<table cellpadding="0" cellspacing="0" border="0" style="font-family: Arial, Helvetica, sans-serif; color:#1a1a1a;">
+  <tr>
+    <td style="padding-right:18px; border-right:2px solid #2e7d32; vertical-align:middle;">
+      <img src="https://issyxlabs.com/assets/logo-firma.png" alt="Issyx Labs" width="140" style="display:block;">
+    </td>
+    <td style="padding-left:18px; vertical-align:middle;">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td style="font-size:15px; font-weight:bold; color:#1a1a1a; padding-bottom:2px;">
+            Guillermo Bistrain
+          </td>
+        </tr>
+        <tr>
+          <td style="font-size:13px; color:#2e7d32; font-weight:bold; padding-bottom:8px;">
+            Fundador / Founder — Issyx Labs
+          </td>
+        </tr>
+        <tr>
+          <td style="font-size:12.5px; color:#333333; padding-bottom:2px;">
+            Email: <a href="mailto:gbistrain@issyxlabs.com" style="color:#333333; text-decoration:none;">gbistrain@issyxlabs.com</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-size:12.5px; color:#333333; padding-bottom:2px;">
+            SP +34 613 47 18 66 &nbsp;|&nbsp; USA +1 704 324 1304
+          </td>
+        </tr>
+        <tr>
+          <td style="font-size:12.5px; padding-top:4px;">
+            <a href="https://issyxlabs.com/" style="color:#2e7d32; text-decoration:none; font-weight:bold;">issyxlabs.com</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
