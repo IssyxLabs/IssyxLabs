@@ -58,7 +58,7 @@ nav img{height:32px;width:auto}
 .cbox .cbox-icon{font-size:32px;margin-bottom:.75rem}
 .cbox h3{font-size:17px;font-weight:700;color:var(--w);margin-bottom:.4rem}
 .cbox p{font-size:13.5px;color:var(--s2);margin-bottom:1rem}
-.btn-g{display:inline-flex;align-items:center;gap:7px;padding:12px 28px;border-radius:var(--r);background:var(--g);color:#04100a;font-family:var(--font);font-size:14px;font-weight:700;text-decoration:none;transition:all var(--t)}
+.btn-g{display:inline-flex;align-items:center;gap:7px;padding:12px 28px;border-radius:var(--r);background:var(--g);color:#000;font-family:var(--font);font-size:15px;font-weight:800;text-decoration:none;transition:all var(--t);letter-spacing:.01em}
 .btn-g:hover{background:#56f087;transform:translateY(-1px)}
 .btn-ghost{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:var(--r);background:transparent;color:var(--s2);border:.5px solid var(--b);font-family:var(--font);font-size:14px;font-weight:600;text-decoration:none;transition:all var(--t);margin-left:10px}
 .btn-ghost:hover{background:rgba(255,255,255,.05);color:var(--w)}
@@ -154,10 +154,12 @@ footer a:hover{color:var(--s)}
       <!-- CTA buttons -->
       <div style="margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:10px">
         <a href="mailto:soporte@issyxlabs.com?subject=Solicitud%20de%20eliminaci%C3%B3n%20de%20datos%20personales&body=Estimado%20equipo%20de%20Issyx%20Labs%2C%0A%0ASolicito%20la%20eliminaci%C3%B3n%20de%20todos%20mis%20datos%20personales%20procesados%20por%20Issyx%20Labs%20y%20sus%20servicios%2C%20incluyendo%20Sofia.%0A%0ANombre%20completo%3A%20%0ATeléfono%20asociado%3A%20%0AEmail%20asociado%3A%20%0A%0AConfirmo%20que%20tengo%20derecho%20a%20realizar%20esta%20solicitud%20y%20adjunto%20copia%20de%20mi%20documento%20de%20identidad.%0A%0AGracias." class="btn-g">
-          ✉️ Enviar solicitud por email
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <span style="color:#000;font-weight:800">Enviar solicitud por email</span>
         </a>
         <a href="https://wa.me/34613471866?text=Hola%2C%20quiero%20solicitar%20la%20eliminaci%C3%B3n%20de%20mis%20datos%20personales%20de%20Issyx%20Labs." target="_blank" rel="noopener" class="btn-ghost">
-          💬 Solicitar por WhatsApp
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.112 1.523 5.845L.057 23.143a.75.75 0 0 0 .924.924l5.298-1.466A11.943 11.943 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.712 9.712 0 0 1-4.94-1.35l-.354-.21-3.146.871.886-3.146-.21-.354A9.712 9.712 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+          Solicitar por WhatsApp
         </a>
       </div>
     </div>
@@ -224,12 +226,19 @@ footer a:hover{color:var(--s)}
     </div>
 
     <!-- CTA final -->
-    <div class="cbox">
-      <div class="cbox-icon">🛡️</div>
-      <h3>¿Listo para solicitar la eliminación?</h3>
+    <div class="sec" style="margin-top:1rem">
+      <h2><span class="n" style="font-size:16px">✓</span> ¿Listo para solicitar la eliminación?</h2>
       <p>Te respondemos en máximo 30 días naturales, de forma gratuita y sin burocracia.</p>
-      <a href="mailto:soporte@issyxlabs.com?subject=Solicitud%20de%20eliminaci%C3%B3n%20de%20datos%20personales&body=Estimado%20equipo%20de%20Issyx%20Labs%2C%0A%0ASolicito%20la%20eliminaci%C3%B3n%20de%20todos%20mis%20datos%20personales.%0A%0ANombre%3A%20%0ATeléfono%3A%20%0AEmail%3A%20" class="btn-g">✉️ Enviar solicitud ahora</a>
-      <a href="https://wa.me/34613471866?text=Solicito%20la%20eliminaci%C3%B3n%20de%20mis%20datos%20personales%20de%20Issyx%20Labs." target="_blank" rel="noopener" class="btn-ghost">💬 WhatsApp</a>
+      <div style="margin-top:1.25rem;display:flex;flex-wrap:wrap;gap:10px">
+        <a href="mailto:soporte@issyxlabs.com?subject=Solicitud%20de%20eliminaci%C3%B3n%20de%20datos%20personales&body=Estimado%20equipo%20de%20Issyx%20Labs%2C%0A%0ASolicito%20la%20eliminaci%C3%B3n%20de%20todos%20mis%20datos%20personales.%0A%0ANombre%3A%20%0ATeléfono%3A%20%0AEmail%3A%20" class="btn-g">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <span style="color:#000;font-weight:800">Enviar solicitud por email</span>
+        </a>
+        <a href="https://wa.me/34613471866?text=Solicito%20la%20eliminaci%C3%B3n%20de%20mis%20datos%20personales%20de%20Issyx%20Labs." target="_blank" rel="noopener" class="btn-ghost">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;color:var(--s2)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.112 1.523 5.845L.057 23.143a.75.75 0 0 0 .924.924l5.298-1.466A11.943 11.943 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.712 9.712 0 0 1-4.94-1.35l-.354-.21-3.146.871.886-3.146-.21-.354A9.712 9.712 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+          Solicitar por WhatsApp
+        </a>
+      </div>
     </div>
 
   </div>
