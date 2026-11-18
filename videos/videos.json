@@ -1,1 +1,26 @@
-{}
+{
+  "_ayuda": "Para publicar un video nuevo agrega un bloque a 'videos'. 'id' puede ser el enlace de YouTube o el ID. 'date' AAAA-MM-DD. 'series' es la clave de 'series'. 'format': 'short' para verticales. 'publishAt' (opcional, hora de Madrid) oculta el video hasta esa fecha y hora. El video mas reciente es el destacado.",
+  "series": [
+    {
+      "key": "mi-historia",
+      "es": "Mi historia",
+      "en": "My story"
+    },
+    {
+      "key": "sofia",
+      "es": "Sofía",
+      "en": "Sofia"
+    },
+    {
+      "key": "aprende-ia",
+      "es": "Aprende IA",
+      "en": "Learn AI"
+    },
+    {
+      "key": "make",
+      "es": "Make",
+      "en": "Make"
+    }
+  ],
+  "videos": []
+}
