@@ -862,7 +862,25 @@ if(!localStorage.getItem('il_ck'))setTimeout(()=>{document.getElementById('ck').
 var LG="es",DT="es-ES",WATCH="Ver este video";
 function ytId(v){if(!v)return'';var m=String(v).match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/|\/live\/)([A-Za-z0-9_-]{11})/);return m?m[1]:(/^[A-Za-z0-9_-]{11}$/.test(v)?v:'')}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-fetch('/videos/videos.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null}).then(function(d){
+
+var SHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vTLOe0kNO4A7JTD4y2kZ1wIi3HOs8m8wBrWBtbwwsnacqVIhFTvE-M7ZIcNdi2sVb9Ce8OFKa7SMHoF/pub?gid=230675401&single=true&output=csv";
+function csvRows(t){var r=[],row=[],f='',q=false,i,c;for(i=0;i<t.length;i++){c=t.charAt(i);
+ if(q){if(c==='"'){if(t.charAt(i+1)==='"'){f+='"';i++}else q=false}else f+=c}
+ else if(c==='"')q=true;else if(c===','){row.push(f);f=''}
+ else if(c==='\n'){row.push(f);r.push(row);row=[];f=''}else if(c!=='\r')f+=c}
+ if(f!==''||row.length){row.push(f);r.push(row)}return r}
+function slug(s){return String(s).toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
+function fromSheet(url){return fetch(url,{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){
+ var rows=csvRows(t),h=rows.shift().map(function(s){return s.trim()});h[0]='id';
+ var vs=[],seen={},series=[];
+ rows.forEach(function(c){var o={};h.forEach(function(k,i){o[k]=(c[i]||'').trim()});if(!o.id)return;
+  var k=o.series_es?slug(o.series_es):'';if(k&&!seen[k]){seen[k]=1;series.push({key:k,es:o.series_es,en:o.series_en||o.series_es})}
+  vs.push({id:o.id,title_es:o.title_es,title_en:o.title_en,desc_es:o.desc_es,desc_en:o.desc_en,date:o.date,series:k,format:o.format,sofia:o.sofia_link})});
+ return{series:series,videos:vs}})}
+function fromJson(){return fetch('/videos/videos.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{series:[],videos:[]}}).catch(function(){return{series:[],videos:[]}})}
+function getData(){return SHEET?fromSheet(SHEET).catch(fromJson):fromJson()}
+
+getData().then(function(d){
  if(!d)return;var now=Date.now(),ser={};(d.series||[]).forEach(function(s){ser[s.key]=s});
  var vs=(d.videos||[]).map(function(v){v._id=ytId(v.id||v.url);return v}).filter(function(v){if(!v._id)return false;if(v.publishAt){var t=Date.parse(v.publishAt);if(!isNaN(t)&&t>now)return false}return true});
  if(!vs.length)return;
