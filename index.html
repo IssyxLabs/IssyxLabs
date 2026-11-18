@@ -875,7 +875,7 @@ function fromSheet(url){return fetch(url,{cache:'no-cache'}).then(function(r){if
  var vs=[],seen={},series=[];
  rows.forEach(function(c){var o={};h.forEach(function(k,i){o[k]=(c[i]||'').trim()});if(!o.id)return;
   var k=o.series_es?slug(o.series_es):'';if(k&&!seen[k]){seen[k]=1;series.push({key:k,es:o.series_es,en:o.series_en||o.series_es})}
-  vs.push({id:o.id,title_es:o.title_es,title_en:o.title_en,desc_es:o.desc_es,desc_en:o.desc_en,date:o.date,series:k,format:o.format,sofia:o.sofia_link})});
+  vs.push({thumb:/^(https:\/\/|\/)/.test(o.thumb||'')?o.thumb:'',id:o.id,title_es:o.title_es,title_en:o.title_en,desc_es:o.desc_es,desc_en:o.desc_en,date:o.date,series:k,format:o.format,sofia:o.sofia_link})});
  return{series:series,videos:vs}})}
 function fromJson(){return fetch('/videos/videos.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{series:[],videos:[]}}).catch(function(){return{series:[],videos:[]}})}
 function getData(){return SHEET?fromSheet(SHEET).catch(fromJson):fromJson()}
@@ -885,13 +885,14 @@ getData().then(function(d){
  var vs=(d.videos||[]).map(function(v){v._id=ytId(v.id||v.url);return v}).filter(function(v){if(!v._id)return false;if(v.publishAt){var t=Date.parse(v.publishAt);if(!isNaN(t)&&t>now)return false}return true});
  if(!vs.length)return;
  vs.sort(function(a,b){var x=(a.publishAt?a.publishAt.slice(0,10):a.date)||'',y=(b.publishAt?b.publishAt.slice(0,10):b.date)||'';return x<y?1:x>y?-1:0});
- var v=vs[0],short=v.format==='short',src='https://i.ytimg.com/vi/'+v._id+'/hqdefault.jpg';
+ var v=vs[0],short=v.format==='short',hq='https://i.ytimg.com/vi/'+v._id+'/hqdefault.jpg',src=v.thumb||('https://i.ytimg.com/vi/'+v._id+'/maxresdefault.jpg');
+ window.vdFix=function(i,err){var q=i.getAttribute('data-hq');if(q&&i.getAttribute('src')!==q&&(err||i.naturalWidth<=160))i.src=q};
  function pk(k){return v[k+'_'+LG]||v[k+'_es']||v[k+'_en']||''}
  var s=v.series&&ser[v.series],sn=s?(s[LG]||s.es||s.en):'';
  var dt='';try{dt=new Date(v.date+'T12:00:00').toLocaleDateString(DT,{year:'numeric',month:'long',day:'numeric'})}catch(e){}
  var c=document.getElementById('hvCard');
  c.href="/videos/"+'?v='+v._id;
- c.innerHTML='<div class="hv-th'+(short?' is-short':'')+'">'+(short?'<img class="hv-blur" src="'+src+'" alt="" aria-hidden="true" loading="lazy">':'')+'<img class="hv-main" src="'+src+'" alt="" loading="lazy" decoding="async"><span class="hv-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div>'+(sn?'<span class="hv-chip">'+esc(sn)+'</span>':'')+'<div class="hv-t">'+esc(pk('title'))+'</div><p class="hv-d">'+esc(pk('desc'))+(dt?' ':'')+'</p><span class="btn btn-g">'+esc(WATCH)+'</span></div>';
+ c.innerHTML='<div class="hv-th'+(short?' is-short':'')+'">'+(short?'<img class="hv-blur" src="'+esc(src)+'" data-hq="'+hq+'" onload="vdFix(this)" onerror="vdFix(this,1)" alt="" aria-hidden="true" loading="lazy">':'')+'<img class="hv-main" src="'+esc(src)+'" data-hq="'+hq+'" onload="vdFix(this)" onerror="vdFix(this,1)" alt="" loading="lazy" decoding="async"><span class="hv-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div>'+(sn?'<span class="hv-chip">'+esc(sn)+'</span>':'')+'<div class="hv-t">'+esc(pk('title'))+'</div><p class="hv-d">'+esc(pk('desc'))+(dt?' ':'')+'</p><span class="btn btn-g">'+esc(WATCH)+'</span></div>';
  document.getElementById('hv').hidden=false;
 }).catch(function(){});
 })();
