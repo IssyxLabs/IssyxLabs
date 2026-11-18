@@ -372,6 +372,26 @@ html{scroll-padding-top:98px}
 .logo-chip img{display:block;height:34px;width:auto}
 footer .logo-chip{padding:4px 11px;border-radius:10px}
 footer .logo-chip img{height:27px}
+
+/* HOME LATEST VIDEO */
+.hv{padding:4rem 1.5rem;max-width:1100px;margin:0 auto}
+.hv[hidden]{display:none!important}
+.hv-ey{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:.8rem}
+.hv-ey::before{content:'';width:16px;height:1.5px;background:var(--g)}
+.hv-h{font-size:clamp(24px,4vw,34px);font-weight:800;line-height:1.15;color:var(--w);margin-bottom:1.6rem;letter-spacing:-.01em}
+.hv-card{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:1.8rem;align-items:center;text-decoration:none;background:rgba(255,255,255,.025);border:1px solid var(--b);border-radius:20px;padding:1.2rem;transition:border-color var(--t)}
+.hv-card:hover{border-color:rgba(61,220,110,.4)}
+.hv-th{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
+.hv-th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hv-th.is-short img.hv-main{left:50%;width:auto;aspect-ratio:9/16;transform:translateX(-50%)}
+.hv-th .hv-blur{filter:blur(20px) brightness(.55);transform:scale(1.25)}
+.hv-play{position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;background:rgba(7,9,15,.72);border:1.5px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center}
+.hv-play svg{width:22px;height:22px;fill:#fff;margin-left:3px}
+.hv-chip{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g);background:rgba(61,220,110,.1);border:1px solid rgba(61,220,110,.25);border-radius:999px;padding:3px 10px;margin-bottom:.7rem}
+.hv-t{font-size:clamp(19px,2.6vw,25px);font-weight:800;line-height:1.25;color:var(--w);margin-bottom:.7rem}
+.hv-d{color:var(--s2);font-size:14.5px;line-height:1.65;margin-bottom:1.1rem}
+.hv-more{margin-top:1.3rem;text-align:center}
+@media(max-width:760px){.hv{padding:3rem 1rem}.hv-card{grid-template-columns:1fr;gap:1rem;padding:1rem}}
 </style>
 </head>
 <body>
@@ -388,6 +408,7 @@ footer .logo-chip img{height:27px}
     <li><a href="#sofia">Sofia</a></li>
     <li><a href="#personas">Personas</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="/videos/">Videos</a></li>
     <li><a href="/socios/">Red de Socios</a></li>
   </ul>
   <div class="nav-cta"><span style="color:var(--g);font-size:13px;font-weight:700;padding:6px 4px">ES</span><a href="/en/" style="font-size:13px;font-weight:600;color:var(--s2);text-decoration:none;padding:6px 10px;border-radius:6px;border:.5px solid var(--b);margin-right:4px;transition:all var(--t)" onmouseover="this.style.color='var(--w)'" onmouseout="this.style.color='var(--s2)'">EN</a>
@@ -411,6 +432,7 @@ footer .logo-chip img{height:27px}
       <li><a href="#sofia" onclick="closeMenu()">Sofia</a></li>
       <li><a href="#personas" onclick="closeMenu()">Personas</a></li>
       <li><a href="#nosotros" onclick="closeMenu()">Nosotros</a></li>
+    <li><a href="/videos/" onclick="closeMenu()">Videos</a></li>
       <li><a href="/socios/" onclick="closeMenu()">Red de Socios</a></li>
     </ul>
     <div class="mnav-cta">
@@ -684,6 +706,14 @@ footer .logo-chip img{height:27px}
 
 <hr class="hr">
 
+<!-- ÚLTIMO VIDEO -->
+<section class="hv" id="hv" hidden>
+  <div class="hv-ey">Último video</div>
+  <h2 class="hv-h">Mira lo más reciente de Issyx Labs</h2>
+  <a class="hv-card" id="hvCard" href="/videos/"></a>
+  <div class="hv-more"><a class="btn btn-ghost" href="/videos/">Ver todos los videos →</a></div>
+</section>
+
 <!-- CTA FINAL -->
 <div id="asesoria" class="cta-sec">
   <div class="wrap" style="position:relative;z-index:1">
@@ -707,6 +737,7 @@ footer .logo-chip img{height:27px}
       <li><a href="#sofia">Sofia</a></li>
       <li><a href="#personas">Personas</a></li>
       <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="/videos/">Videos</a></li>
     <li><a href="/socios/">Red de Socios</a></li>
       <li><a href="mailto:soporte@issyxlabs.com">Soporte</a></li>
       <li><a href="https://wa.me/34614038473?text=Hola%20Issyx%20Labs%2C%20me%20gustar%C3%ADa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios." target="_blank" rel="noopener" style="color:#25d366">WhatsApp</a></li>
@@ -826,5 +857,26 @@ function acceptCk(){localStorage.setItem('il_ck','all');hideCk()}
 function rejectCk(){localStorage.setItem('il_ck','essential');hideCk()}
 function hideCk(){const c=document.getElementById('ck');c.classList.add('hide');setTimeout(()=>c.style.display='none',350)}
 if(!localStorage.getItem('il_ck'))setTimeout(()=>{document.getElementById('ck').classList.add('show')},2500);</script>
+<script>
+(function(){
+var LG="es",DT="es-ES",WATCH="Ver este video";
+function ytId(v){if(!v)return'';var m=String(v).match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/|\/live\/)([A-Za-z0-9_-]{11})/);return m?m[1]:(/^[A-Za-z0-9_-]{11}$/.test(v)?v:'')}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+fetch('/videos/videos.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null}).then(function(d){
+ if(!d)return;var now=Date.now(),ser={};(d.series||[]).forEach(function(s){ser[s.key]=s});
+ var vs=(d.videos||[]).map(function(v){v._id=ytId(v.id||v.url);return v}).filter(function(v){if(!v._id)return false;if(v.publishAt){var t=Date.parse(v.publishAt);if(!isNaN(t)&&t>now)return false}return true});
+ if(!vs.length)return;
+ vs.sort(function(a,b){var x=(a.publishAt?a.publishAt.slice(0,10):a.date)||'',y=(b.publishAt?b.publishAt.slice(0,10):b.date)||'';return x<y?1:x>y?-1:0});
+ var v=vs[0],short=v.format==='short',src='https://i.ytimg.com/vi/'+v._id+'/hqdefault.jpg';
+ function pk(k){return v[k+'_'+LG]||v[k+'_es']||v[k+'_en']||''}
+ var s=v.series&&ser[v.series],sn=s?(s[LG]||s.es||s.en):'';
+ var dt='';try{dt=new Date(v.date+'T12:00:00').toLocaleDateString(DT,{year:'numeric',month:'long',day:'numeric'})}catch(e){}
+ var c=document.getElementById('hvCard');
+ c.href="/videos/"+'?v='+v._id;
+ c.innerHTML='<div class="hv-th'+(short?' is-short':'')+'">'+(short?'<img class="hv-blur" src="'+src+'" alt="" aria-hidden="true" loading="lazy">':'')+'<img class="hv-main" src="'+src+'" alt="" loading="lazy" decoding="async"><span class="hv-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><div>'+(sn?'<span class="hv-chip">'+esc(sn)+'</span>':'')+'<div class="hv-t">'+esc(pk('title'))+'</div><p class="hv-d">'+esc(pk('desc'))+(dt?' ':'')+'</p><span class="btn btn-g">'+esc(WATCH)+'</span></div>';
+ document.getElementById('hv').hidden=false;
+}).catch(function(){});
+})();
+</script>
 </body>
 </html>
